@@ -1,4 +1,5 @@
 import 'package:bab3/provider/app_provider.dart';
+import 'package:bab3/screens/auth_gate_page.dart';
 
 import 'package:bab3/screens/login_page.dart';
 import 'package:bab3/services/firebase_options.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
           colorScheme: const ColorScheme.light(),
           useMaterial3: true,
         ),
-        home: const LoginPage(),
+        home: const AuthGatePage(),
       ),
     );
   }

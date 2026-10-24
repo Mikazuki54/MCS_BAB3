@@ -31,9 +31,8 @@ class _HomePageState extends State<HomePage> {
             actions: [
               IconButton(
                 icon: Icon(Icons.logout, color: Colors.white),
-                onPressed: () {
-                  appProvider.logoutAccount();
-                  appProvider.resetForm();
+                onPressed: () async {
+                  await appProvider.logoutAccount();
                 },
               ),
             ],
