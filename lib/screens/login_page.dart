@@ -1,4 +1,4 @@
-import 'package:bab3/model/app_style.dart';
+import 'package:bab3/utils/app_style.dart';
 import 'package:bab3/provider/app_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
