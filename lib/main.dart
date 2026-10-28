@@ -1,12 +1,9 @@
 import 'package:bab3/provider/app_provider.dart';
 import 'package:bab3/screens/auth_gate_page.dart';
-
-import 'package:bab3/screens/login_page.dart';
 import 'package:bab3/services/firebase_options.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
