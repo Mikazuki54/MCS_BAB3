@@ -41,46 +41,46 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBPJsfuPYA5P_izKERGI-Gfjd1GQFqc25E',
-    appId: '1:1070635899032:web:46d3bd11dfc0d6e51cd8ed',
-    messagingSenderId: '1070635899032',
-    projectId: 'testbab3-e69c6',
-    authDomain: 'testbab3-e69c6.firebaseapp.com',
-    storageBucket: 'testbab3-e69c6.firebasestorage.app',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    authDomain: '',
+    storageBucket: '',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBmFCT0crXzQQ2SAkK19v5giNV01tIcxf8',
-    appId: '1:1070635899032:android:ac574f4f335d93b21cd8ed',
-    messagingSenderId: '1070635899032',
-    projectId: 'testbab3-e69c6',
-    storageBucket: 'testbab3-e69c6.firebasestorage.app',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAQ7pTvKd7M1u5Um6EHdnVvnByx5Sq5Dso',
-    appId: '1:1070635899032:ios:d32b1e3bb60c42301cd8ed',
-    messagingSenderId: '1070635899032',
-    projectId: 'testbab3-e69c6',
-    storageBucket: 'testbab3-e69c6.firebasestorage.app',
-    iosBundleId: 'com.example.bab3',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
+    iosBundleId: '',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAQ7pTvKd7M1u5Um6EHdnVvnByx5Sq5Dso',
-    appId: '1:1070635899032:ios:d32b1e3bb60c42301cd8ed',
-    messagingSenderId: '1070635899032',
-    projectId: 'testbab3-e69c6',
-    storageBucket: 'testbab3-e69c6.firebasestorage.app',
-    iosBundleId: 'com.example.bab3',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
+    iosBundleId: '',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBPJsfuPYA5P_izKERGI-Gfjd1GQFqc25E',
-    appId: '1:1070635899032:web:b19bb867f55150971cd8ed',
-    messagingSenderId: '1070635899032',
-    projectId: 'testbab3-e69c6',
-    authDomain: 'testbab3-e69c6.firebaseapp.com',
-    storageBucket: 'testbab3-e69c6.firebasestorage.app',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    authDomain: '',
+    storageBucket: '',
   );
 }
