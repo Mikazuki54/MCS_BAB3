@@ -90,31 +90,31 @@ c:\Users\Mikazuki\Desktop\testbab3\
 
 ```mermaid
 flowchart TD
-    Start([Mulai Aplikasi: main.dart]) --> FirebaseInit[Inisialisasi Firebase & DevicePreview]
-    FirebaseInit --> MultiProv[Injeksi AppProvider via MultiProvider]
-    MultiProv --> AuthGate[AuthGatePage]
+    Start["Mulai Aplikasi: main.dart"] --> FirebaseInit["Inisialisasi Firebase & DevicePreview"]
+    FirebaseInit --> MultiProv["Injeksi AppProvider via MultiProvider"]
+    MultiProv --> AuthGate["AuthGatePage"]
     
-    AuthGate --> StreamCheck{Stream: authStateChanges}
-    StreamCheck -- User Belum Login / null -- --> LoginPage[LoginPage]
-    StreamCheck -- User Terautentikasi -- --> HomePage[HomePage]
+    AuthGate --> StreamCheck{"Stream: authStateChanges"}
+    StreamCheck -->|"User Belum Login / null"| LoginPage["LoginPage"]
+    StreamCheck -->|"User Terautentikasi"| HomePage["HomePage"]
     
-    LoginPage --> InputForm[User Memasukkan Email & Password]
-    InputForm --> Validate[Validasi Form & Regex]
-    Validate -- Tidak Valid -- --> ShowFormError[Tampilkan Error di Input Field]
-    Validate -- Valid -- --> CallLogin[AppProvider.loginToApp]
+    LoginPage --> InputForm["User Memasukkan Email & Password"]
+    InputForm --> Validate["Validasi Form & Regex"]
+    Validate -->|"Tidak Valid"| ShowFormError["Tampilkan Error di Input Field"]
+    Validate -->|"Valid"| CallLogin["AppProvider.loginToApp"]
     
-    CallLogin --> FireAuthReq{Request ke Firebase Auth}
-    FireAuthReq -- Gagal / Error -- --> LottieDialog[Tampilkan AlertDialog + Animasi Lottie]
-    FireAuthReq -- Berhasil -- --> StreamCheck
+    CallLogin --> FireAuthReq{"Request ke Firebase Auth"}
+    FireAuthReq -->|"Gagal / Error"| LottieDialog["Tampilkan AlertDialog + Animasi Lottie"]
+    FireAuthReq -->|"Berhasil"| StreamCheck
     
-    HomePage --> BrowseList[Melihat Daftar Ras Kucing]
-    BrowseList --> ClickItem[Klik Salah Satu Ras Kucing]
-    ClickItem --> DetailPage[DetailPage: Foto Besar & Deskripsi]
-    DetailPage --> BackHome[Kembali ke HomePage]
+    HomePage --> BrowseList["Melihat Daftar Ras Kucing"]
+    BrowseList --> ClickItem["Klik Salah Satu Ras Kucing"]
+    ClickItem --> DetailPage["DetailPage: Foto Besar & Deskripsi"]
+    DetailPage --> BackHome["Kembali ke HomePage"]
     
-    HomePage --> ClickLogout[Klik Tombol Logout pada AppBar]
-    ClickLogout --> CallLogout[AppProvider.logoutAccount]
-    CallLogout --> FirebaseSignOut[Firebase.signOut]
+    HomePage --> ClickLogout["Klik Tombol Logout pada AppBar"]
+    ClickLogout --> CallLogout["AppProvider.logoutAccount"]
+    CallLogout --> FirebaseSignOut["Firebase.signOut"]
     FirebaseSignOut --> StreamCheck
 ```
 
