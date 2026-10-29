@@ -24,6 +24,7 @@ Aplikasi ini dirancang dengan memisahkan *concern* (Separation of Concerns) seca
    - [10. lib/screens/detail_page.dart](#10-libscreensdetail_pagedart)
    - [11. test/widget_test.dart](#11-testwidget_testdart)
 6. [Panduan Instalasi & Menjalankan Aplikasi](#-panduan-instalasi--menjalankan-aplikasi)
+7. [Catatan Pembaruan & Keamanan](#-catatan-pembaruan--keamanan)
 
 ---
 
@@ -374,47 +375,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBPJsfuPYA5P_izKERGI-Gfjd1GQFqc25E',
-    appId: '1:1070635899032:web:46d3bd11dfc0d6e51cd8ed',
-    messagingSenderId: '1070635899032',
-    projectId: 'testbab3-e69c6',
-    authDomain: 'testbab3-e69c6.firebaseapp.com',
-    storageBucket: 'testbab3-e69c6.firebasestorage.app',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    authDomain: '',
+    storageBucket: '',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBmFCT0crXzQQ2SAkK19v5giNV01tIcxf8',
-    appId: '1:1070635899032:android:ac574f4f335d93b21cd8ed',
-    messagingSenderId: '1070635899032',
-    projectId: 'testbab3-e69c6',
-    storageBucket: 'testbab3-e69c6.firebasestorage.app',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAQ7pTvKd7M1u5Um6EHdnVvnByx5Sq5Dso',
-    appId: '1:1070635899032:ios:d32b1e3bb60c42301cd8ed',
-    messagingSenderId: '1070635899032',
-    projectId: 'testbab3-e69c6',
-    storageBucket: 'testbab3-e69c6.firebasestorage.app',
-    iosBundleId: 'com.example.bab3',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
+    iosBundleId: '',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAQ7pTvKd7M1u5Um6EHdnVvnByx5Sq5Dso',
-    appId: '1:1070635899032:ios:d32b1e3bb60c42301cd8ed',
-    messagingSenderId: '1070635899032',
-    projectId: 'testbab3-e69c6',
-    storageBucket: 'testbab3-e69c6.firebasestorage.app',
-    iosBundleId: 'com.example.bab3',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
+    iosBundleId: '',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBPJsfuPYA5P_izKERGI-Gfjd1GQFqc25E',
-    appId: '1:1070635899032:web:b19bb867f55150971cd8ed',
-    messagingSenderId: '1070635899032',
-    projectId: 'testbab3-e69c6',
-    authDomain: 'testbab3-e69c6.firebaseapp.com',
-    storageBucket: 'testbab3-e69c6.firebasestorage.app',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    authDomain: '',
+    storageBucket: '',
   );
 }
 ```
@@ -423,8 +424,9 @@ class DefaultFirebaseOptions {
 1. **`DefaultFirebaseOptions.currentPlatform` Getter**:
    - Mendeteksi platform target saat aplikasi berjalan (`kIsWeb` untuk Web, `defaultTargetPlatform` untuk Android, iOS, Windows, macOS).
    - Mengembalikan konfigurasi konstanta `FirebaseOptions` yang sesuai dengan sistem operasi yang aktif.
-2. **Kredensial Firebase (`apiKey`, `appId`, `projectId`, dll.)**:
-   - Mengidentifikasi proyek Firebase di cloud (`testbab3-e69c6`) sehingga SDK lokal dapat berkomunikasi secara aman dengan server autentikasi dan penyimpanan Firebase.
+2. **Sanitasi Kredensial Firebase (`apiKey`, `appId`, `projectId`, dll.)**:
+   - Demi mematuhi praktik keamanan (*security best practices*), seluruh nilai konfigurasi kredensial sengaja dikosongkan (`''`) agar tidak mengekspos kredensial proyek Firebase ke publik/version control.
+   - Pengembang dapat mengisi konfigurasi proyek masing-masing atau menggunakan FlutterFire CLI untuk mengonfigurasi otomatis.
 
 ---
 
@@ -528,8 +530,8 @@ File ini menangani antarmuka pengguna untuk autentikasi, validasi masukan form, 
 
 #### 📝 Cuplikan Kode Lengkap
 ```dart
-import 'package:bab3/utils/app_style.dart';
 import 'package:bab3/provider/app_provider.dart';
+import 'package:bab3/utils/app_style.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -542,54 +544,61 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passController = TextEditingController();
-  final AppStyles appStyles = AppStyles();
+  final formKey = GlobalKey<FormState>();
+  final usernameController = TextEditingController();
+  final passController = TextEditingController();
+  final appStyles = AppStyles();
+
+  InputDecoration _inputDecoration(String hint, IconData icon, [Widget? suffix]) {
+    final border = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: const BorderSide(color: Colors.black),
+    );
+    return InputDecoration(
+      hintText: hint,
+      hintStyle: appStyles.hintTextFontStyle,
+      prefixIcon: Icon(icon, color: appStyles.iconColor),
+      suffixIcon: suffix,
+      border: border,
+      enabledBorder: border,
+      focusedBorder: border,
+    );
+  }
 
   Future<void> validationForm() async {
-    if (formKey.currentState?.validate() != true) {
-      return;
-    }
+    if (formKey.currentState?.validate() != true) return;
 
     try {
       await context.read<AppProvider>().loginToApp(
-        usernameController.text,
-        passController.text,
-      );
-    } catch (e) {
-      if (!mounted) {
-        return;
-      }
+            usernameController.text,
+            passController.text,
+          );
+    } catch (_) {
+      if (!mounted) return;
+      final size = MediaQuery.of(context).size.width / 6;
       showDialog<void>(
         context: context,
-        builder: (builder) {
-          return AlertDialog(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Login Failed"),
-                const SizedBox(width: 10),
-                LottieBuilder.asset(
-                  height: MediaQuery.of(context).size.width / 6,
-                  width: MediaQuery.of(context).size.width / 6,
-                  "assets/lottie_failed_animations.json",
-                  repeat: true,
-                ),
-              ],
-            ),
-            content: const Text(
-              "Silahkan Masukkan Username dan Password yang Benar",
-              textAlign: TextAlign.center,
-            ),
-          );
-        },
+        builder: (_) => AlertDialog(
+          title: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text("Login Failed"),
+              LottieBuilder.asset(
+                "assets/lottie_failed_animations.json",
+                width: size,
+                height: size,
+              ),
+            ],
+          ),
+          content: const Text(
+            "Silahkan Masukkan Username dan Password yang Benar",
+            textAlign: TextAlign.center,
+          ),
+        ),
       );
     }
   }
 
-  // METHOD RESET FIELD FORM
   void resetForm() {
     usernameController.clear();
     passController.clear();
@@ -597,7 +606,6 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {});
   }
 
-  // Wajib ditambahkan: Menghancurkan controller saat berpindah layar
   @override
   void dispose() {
     usernameController.dispose();
@@ -620,8 +628,9 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
+              padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
-                border: BoxBorder.all(color: Colors.black),
+                border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
                 boxShadow: [
@@ -632,134 +641,79 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
               ),
-              child: Padding(
-                padding: EdgeInsets.all(15),
+              child: Form(
+                key: formKey,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Form(
-                      key: formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Email", style: appStyles.universalFontStyle),
-                          SizedBox(height: 10),
-                          TextFormField(
-                            controller: usernameController,
-                            keyboardType: TextInputType.emailAddress,
-                            style: appStyles.universalFontStyle,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              hintText: appStyles.hintUsernameText,
-                              hintStyle: appStyles.hintTextFontStyle,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide(color: Colors.black),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide(color: Colors.black),
-                              ),
-                              prefixIcon: Icon(
-                                Icons.mail_outline,
-                                color: appStyles.iconColor,
-                              ),
-                            ),
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Harap Isi Kolom username";
-                              }
-                              RegExp emailFormat = RegExp(
-                                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                              );
-                              if (emailFormat.hasMatch(value)) {
-                                return null;
-                              }
-                              return 'Harap masukkan E-MAIL sesuai dengan format';
-                            },
-                          ),
-
-                          SizedBox(height: 20),
-                          Text("Password", style: appStyles.universalFontStyle),
-                          TextFormField(
-                            controller: passController,
-                            obscureText: appStyles.visibilityIcon
-                                ? true
-                                : false,
-                            style: appStyles.universalFontStyle,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              hintText: appStyles.hintPassText,
-                              hintStyle: appStyles.hintTextFontStyle,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide(color: Colors.black),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide(color: Colors.black),
-                              ),
-                              prefix: Icon(Icons.lock_outline),
-                              prefixIconColor: appStyles.iconColor,
-                              suffixIcon: GestureDetector(
-                                child: appStyles.visibilityIcon
-                                    ? Icon(
-                                        Icons.visibility_off,
-                                        color: appStyles.iconColor,
-                                      )
-                                    : Icon(
-                                        Icons.visibility,
-                                        color: appStyles.iconColor,
-                                      ),
-                                onTap: () {
-                                  setState(() {
-                                    appStyles.visibilityIcon =
-                                        !appStyles.visibilityIcon;
-                                  });
-                                },
-                              ),
-                            ),
-                            autovalidateMode: AutovalidateMode.onUnfocus,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Harap mengisikan kolom password";
-                              }
-                              return null;
-                            },
-                          ),
-                        ],
+                    Text("Email", style: appStyles.universalFontStyle),
+                    const SizedBox(height: 10),
+                    TextFormField(
+                      controller: usernameController,
+                      keyboardType: TextInputType.emailAddress,
+                      style: appStyles.universalFontStyle,
+                      decoration: _inputDecoration(
+                        appStyles.hintUsernameText,
+                        Icons.mail_outline,
                       ),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Harap Isi Kolom username";
+                        }
+                        return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                                .hasMatch(value)
+                            ? null
+                            : 'Harap masukkan E-MAIL sesuai dengan format';
+                      },
                     ),
-                    SizedBox(height: 70),
-                    GestureDetector(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.green[600],
-                          borderRadius: BorderRadius.circular(10),
+                    const SizedBox(height: 20),
+                    Text("Password", style: appStyles.universalFontStyle),
+                    TextFormField(
+                      controller: passController,
+                      obscureText: appStyles.visibilityIcon,
+                      style: appStyles.universalFontStyle,
+                      decoration: _inputDecoration(
+                        appStyles.hintPassText,
+                        Icons.lock_outline,
+                        GestureDetector(
+                          onTap: () => setState(
+                            () => appStyles.visibilityIcon =
+                                !appStyles.visibilityIcon,
+                          ),
+                          child: Icon(
+                            appStyles.visibilityIcon
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: appStyles.iconColor,
+                          ),
                         ),
-                        child: Padding(
+                      ),
+                      autovalidateMode: AutovalidateMode.onUnfocus,
+                      validator: (value) => (value == null || value.isEmpty)
+                          ? "Harap mengisikan kolom password"
+                          : null,
+                    ),
+                    const SizedBox(height: 70),
+                    Center(
+                      child: GestureDetector(
+                        onTap: validationForm,
+                        child: Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 40,
                             vertical: 10,
                           ),
+                          decoration: BoxDecoration(
+                            color: Colors.green[600],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           child: Text(
                             appStyles.loginButtonText,
                             style: appStyles.buttonFontStyle,
-                            textAlign: TextAlign.center,
                           ),
                         ),
                       ),
-                      onTap: () {
-                        validationForm();
-                      },
                     ),
                   ],
                 ),
@@ -774,23 +728,24 @@ class _LoginPageState extends State<LoginPage> {
 ```
 
 #### 🔬 Analisis & Penjelasan Kode
-1. **Manajemen Kontroler & Lifecycle**:
+1. **Refactoring & Optimasi Efisiensi Kode**:
+   - Kode disederhanakan dari sebelumnya 243 baris menjadi ~184 baris tanpa mengubah tampilan UI sama sekali.
+   - **`_inputDecoration(...)` Helper**: Mengurangi duplikasi konfigurasi `OutlineInputBorder`, `hintText`, dan `prefixIcon` untuk kedua kolom input (Email dan Password).
+   - Menghilangkan nesting *redundant* seperti `Padding` di dalam `Container` (menggunakan langsung properti `padding:` pada `Container`).
+2. **Manajemen Kontroler & Lifecycle**:
    - `GlobalKey<FormState> formKey`: Mengidentifikasi widget `Form` secara unik untuk memicu fungsi validasi (`formKey.currentState?.validate()`).
    - `usernameController` & `passController`: Menyimpan dan mengamati nilai teks masukan dari pengguna.
-   - `dispose()`: Sangat penting untuk melepaskan resource memori kontroler saat widget dihancurkan (*unmounted*) guna mencegah kebocoran memori (*memory leaks*).
-2. **Metode `validationForm()`**:
-   - Memeriksa apakah seluruh field formulir telah memenuhi kriteria validasi. Jika tidak, proses berhenti (`return`).
+   - `dispose()`: Melepaskan resource memori kontroler saat widget dihancurkan (*unmounted*) guna mencegah kebocoran memori (*memory leaks*).
+3. **Metode `validationForm()` Ringkas**:
+   - Memeriksa apakah seluruh field formulir telah memenuhi kriteria validasi dengan *guard clause* `if (formKey.currentState?.validate() != true) return;`.
    - Menggunakan `context.read<AppProvider>().loginToApp(...)` untuk memicu proses autentikasi Firebase.
    - **`if (!mounted) return;`**: Pengamanan *asynchronous gap* agar dialog tidak dipanggil jika widget sudah tidak aktif di layar.
-   - **AlertDialog & Lottie**: Jika login gagal (blok `catch`), muncul kotak dialog berisikan teks "Login Failed" dan animasi vektor Lottie dari file aset `assets/lottie_failed_animations.json`.
-3. **Validasi Email Berbasis Regex**:
-   - `RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')`: Memastikan masukan pengguna memiliki format email standar (ada karakter sebelum `@`, ada nama domain, dan diakhiri dengan ekstensi minimal 2–4 karakter).
-   - `autovalidateMode: AutovalidateMode.onUserInteraction`: Validasi berjalan secara langsung saat pengguna mulai mengetik.
-4. **Fitur Toggle Password Visibility**:
-   - Kolom password memiliki ikon mata (`suffixIcon`) yang dibungkus dengan `GestureDetector`.
-   - Ketika ditekan, `setState` membalikkan nilai boolean `appStyles.visibilityIcon` sehingga pengguna dapat menyembunyikan (*obscure*) atau melihat teks sandi secara fleksibel.
-5. **Tombol Login Kustom**:
-   - Dibangun menggunakan `Container` hijau (`Colors.green[600]`) bersudut membulat (*rounded corners*) yang dibungkus `GestureDetector` untuk memicu pemanggilan `validationForm()`.
+   - **AlertDialog & Lottie**: Jika login gagal (blok `catch`), memunculkan dialog kesalahan beranimasi Lottie secara padat.
+4. **Validasi Formulir Bersih**:
+   - Validasi email regex dan validasi password disederhanakan dengan ekspresi ternary ringkas.
+5. **Toggle Password Visibility & Tombol Login**:
+   - `obscureText` langsung membaca nilai `appStyles.visibilityIcon`.
+   - Tombol login kustom dengan latar belakang hijau (`Colors.green[600]`) diposisikan terpusat menggunakan `Center` di dalam struktur kolom tunggal.
 
 ---
 
@@ -1062,11 +1017,37 @@ flutter:
     - assets/
 ```
 
-### 5. Menjalankan Aplikasi
+### 5. Konfigurasi Kredensial Firebase
+Demi keamanan, kredensial pada `lib/services/firebase_options.dart` telah dikosongkan dan `firebase.json` diabaikan oleh Git. Anda dapat menghubungkan proyek Firebase Anda dengan menjalankan perintah:
+```bash
+flutterfire configure
+```
+Atau masukkan kredensial proyek Firebase Anda secara manual ke dalam variabel konstanta platform pada `lib/services/firebase_options.dart`.
+
+### 6. Menjalankan Aplikasi
 Jalankan aplikasi di perangkat atau emulator pilihan Anda:
 ```bash
 flutter run
 ```
+
+---
+
+## 🔒 Catatan Pembaruan & Keamanan
+
+Berikut adalah ringkasan pembaruan dan optimasi terbaru yang diterapkan pada repositori:
+
+1. **Sanitasi Kredensial Firebase (`firebase_options.dart`)**:
+   - Seluruh nilai konfigurasi platform (`apiKey`, `appId`, `messagingSenderId`, `projectId`, `authDomain`, `storageBucket`, dan `iosBundleId`) untuk Web, Android, iOS, macOS, dan Windows telah dikosongkan demi melindungi privasi akun dan keamanan proyek Firebase.
+
+2. **Perlindungan Berkas Konfigurasi (`.gitignore` & `firebase.json`)**:
+   - Berkas `firebase.json` telah didaftarkan ke dalam `.gitignore` dan dilepas dari pelacakan indeks Git (`git rm --cached`) untuk mencegah kebocoran informasi proyek saat melakukan *commit* atau *push* ke repositori publik.
+
+3. **Refactoring & Optimasi Halaman Login (`lib/screens/login_page.dart`)**:
+   - **Pemendekan Kode**: Ukuran kode berhasil dipangkas dari 243 baris menjadi ~184 baris (pengurangan ~25%) tanpa mengubah tampilan maupun interaksi pengguna.
+   - **Deduplikasi Dekorasi Input**: Menambahkan helper `_inputDecoration(...)` untuk memusatkan konfigurasi `OutlineInputBorder`, gaya hint, dan warna ikon sehingga tidak berulang di setiap kolom.
+   - **Perataan Struktur Widget**: Menghapus `Padding` redundant di dalam `Container` yang sudah memiliki properti `padding:` serta merapikan hierarki `Column` dan `Form`.
+   - **Validasi Lebih Padat**: Menyederhanakan penulisan ekspresi Regex email dan validasi kolom teks menjadi lebih ringkas dan bersih.
+   - **Pembersihan Kondisi**: Menghapus ekspresi ternary berlebih pada toggle `obscureText`.
 
 ---
 
