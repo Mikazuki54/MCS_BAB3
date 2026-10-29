@@ -1,32 +1,13 @@
 {
   "project_info": {
-    "project_number": "1070635899032",
-    "project_id": "testbab3-e69c6",
-    "storage_bucket": "testbab3-e69c6.firebasestorage.app"
+    "project_number": "951004877468",
+    "project_id": "mcsbab3-57275",
+    "storage_bucket": "mcsbab3-57275.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1070635899032:android:ecdc93284599fceb1cd8ed",
-        "android_client_info": {
-          "package_name": "com.example.bab2"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBmFCT0crXzQQ2SAkK19v5giNV01tIcxf8"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1070635899032:android:ac574f4f335d93b21cd8ed",
+        "mobilesdk_app_id": "1:951004877468:android:b56c847a61b827f4675359",
         "android_client_info": {
           "package_name": "com.example.bab3"
         }
@@ -34,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBmFCT0crXzQQ2SAkK19v5giNV01tIcxf8"
+          "current_key": "AIzaSyCXkj-HjdZYr5YWfOAEEKydrjCEIBfaK-0"
         }
       ],
       "services": {
